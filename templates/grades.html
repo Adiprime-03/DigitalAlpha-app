@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset = "utf-8"/>
+		<title>Enter LDAP Details</title>
+		<link rel = "stylesheet" type = "text/css" href = "{{ url_for('static', filename = 'bootstrap/css/bootstrap.min.css') }}"/>
+        
+	</head>
+    <body>
+    
+        {{name["name"]}}
+        <table>
+            <tr>
+                <th>Course ID</th>
+                <th>Grade</th>
+                <th>Attendence</th>
+            </tr>
+        </table>
+        {% for g in grade %}
+        <tr>
+
+            <td>{{g["coursno"]}}<td><td> {{g["grade"]}}</td>  <td>{{g["attendance"]}}</td></td><br/>
+        </tr>
+        {% endfor %}
+    </body>
+</html>
