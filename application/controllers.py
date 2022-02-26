@@ -15,7 +15,7 @@ from application.models import Student, Grades, Courses
 from application.database import db
 from application.scraping import roll_name
 
-rollno = None
+rollno = ""
 
 
 @app.route("/login", methods =["GET", "POST"])
@@ -25,7 +25,7 @@ def login():
     elif(request.method == "POST"):
         user_name = request.form["user_name"]
         password = request.form["password"]
-        rollno, name, courseid, coursenames, coursecredits, grades, attendence = roll_name(user_name=user_name, password=password)
+        rollno, name, courseid, coursenames, coursecredits, grades, attendence = roll_name(user_name=user_name.upper(), password=password)
         
         stds = Student.query.all()
         student_names = []
@@ -58,13 +58,13 @@ def login():
                 db.session.add(grade)
                 db.session.commit()
 
-        return redirect("/grades")
+        return redirect(f"/{rollno}/grades")
     
     else:
         raise exception("Method Unknown")
 
-@app.route("/grades")
-def grades():
+@app.route("/<rollno>/grades")
+def grades(rollno):
     student = Student.query.filter(Student.rollno == rollno.upper()).all()
     grade = Grades.query.filter(Grades.rollno == rollno.upper()).all()
 
